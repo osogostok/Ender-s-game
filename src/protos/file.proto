@@ -1,0 +1,44 @@
+syntax = "proto2";
+
+package ex00;
+
+
+message Coordinates {
+  repeated float pos = 1;
+}
+
+message Ship {
+    enum AlignmentType {
+        Ally = 0;
+        Enemy = 1;
+    }
+    enum ClassShipType {
+        Corvette = 0;
+        Frigate = 1;
+        Cruiser = 2;
+        Destroyer = 3;
+        Carrier = 4;
+        Dreadnought = 5;
+    }
+    message OficerType {
+        required string first_name = 1;
+        required string second_name = 2;
+        required string rank = 3;
+    }
+
+    required AlignmentType alignment = 1;
+    required string name = 2;
+    required float length = 3;
+    required ClassShipType class_ship = 4;
+    required int32 size = 5;
+    required bool armed = 6;
+    repeated OficerType oficer = 7;
+}  
+
+message Ships {
+    repeated Ship ship = 1;
+}
+
+service Space {
+  rpc get_ships(Coordinates) returns (stream Ship) {}
+}
